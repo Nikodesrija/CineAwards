@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
      window.token = token;
     console.log('Token found in localStorage:', window.token);
-    fetch('http://localhost:3000/user/verify-token', {
+    fetch('https://cineawards.onrender.com/user/verify-token', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token

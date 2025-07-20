@@ -1,5 +1,5 @@
 async function fetchCategories() {
-  const res = await fetch('http://localhost:3000/category/categories', {
+  const res = await fetch('https://cineawards.onrender.com/category/categories', {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
   });
   const result = await res.json();
@@ -68,7 +68,7 @@ function updateCategory(id) {
   const votingEnd = prompt("Enter new voting end (yyyy-mm-ddThh:mm):");
 
   if (name && votingStart && votingEnd) {
-    fetch(`http://localhost:3000/category/category/${id}`, {
+    fetch(`https://cineawards.onrender.com/category/category/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ function updateCategory(id) {
 function deleteCategory(id) {
   const token = localStorage.getItem('token');
   if (confirm('Are you sure you want to delete this category?')) {
-    fetch(`http://localhost:3000/category/category/${id}`, {
+    fetch(`https://cineawards.onrender.com/category/category/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + token
@@ -116,7 +116,7 @@ fetchCategories();
 
     try {
       // Replace with your actual API call
-      const res = await fetch('http://localhost:3000/notifications'); 
+      const res = await fetch('https://cineawards.onrender.com/notifications'); 
       const data = await res.json();
 
       if (data.length > 0) {
@@ -147,7 +147,7 @@ fetchCategories();
 
     try {
       // Fetch notifications from your API (replace with your actual URL)
-      const res = await fetch('http://localhost:3000/notifications');
+      const res = await fetch('https://cineawards.onrender.com/notifications');
       notifications = await res.json();
 
       if (notifications.length > 0) {

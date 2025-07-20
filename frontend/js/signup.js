@@ -20,7 +20,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
   };
 
   try {
-    const res = await fetch('http://localhost:3000/user/signup', {
+    const res = await fetch('https://cineawards.onrender.com/user/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

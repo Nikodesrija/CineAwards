@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/category/add', {
+      const res = await fetch('https://cineawards.onrender.com/category/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function loadParentCategories() {
   const token = localStorage.getItem('token');
-  const res = await fetch('http://localhost:3000/category/parents', {
+  const res = await fetch('https://cineawards.onrender.com/parents', {
     headers: { Authorization: 'Bearer ' + token }
   });
 

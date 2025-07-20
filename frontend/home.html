@@ -721,7 +721,7 @@
   <script src="js/script.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      fetch('http://localhost:3000/category/dates/Best Actress') 
+      fetch('https://cineawards.onrender.com/category/dates/Best Actress') 
         .then(response => response.json())
         .then(data => {
           const start = new Date(data.startDate);

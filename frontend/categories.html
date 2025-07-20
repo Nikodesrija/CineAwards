@@ -56,9 +56,6 @@
   z-index: 1;
   pointer-events: none;
 }
-
-
-
     /* Navbar */
     .navbar {
       position: relative;
@@ -589,7 +586,7 @@
 
     try {
       console.log('Fetching /categories/grouped...');
-      const res = await fetch('http://localhost:3000/category/grouped');
+      const res = await fetch('https://cineawards.onrender.com/category/grouped');
       const data = await res.json();
       const categories = data[group] || [];
 

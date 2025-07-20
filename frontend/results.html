@@ -540,9 +540,9 @@
   <script>
   async function loadGroupsAndWinners() {
     try {
-      const grpRes = await fetch('http://localhost:3000/category/grouped');
+      const grpRes = await fetch('https://cineawards.onrender.com/category/grouped');
       const groups = await grpRes.json();
-      const winRes = await fetch('http://localhost:3000/win/result', {
+      const winRes = await fetch('https://cineawards.onrender.com/win/result', {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
       });
       const winners = await winRes.json();

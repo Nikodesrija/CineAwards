@@ -1,6 +1,6 @@
 const token = localStorage.getItem('token');
 if (token) {
-  fetch('http://localhost:3000/user/profile', {
+  fetch('https://cineawards.onrender.com/user/profile', {
     headers: { Authorization: 'Bearer ' + token }
   })
   .then(res => res.json())

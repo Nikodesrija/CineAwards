@@ -6,7 +6,7 @@ document.getElementById('changePasswordForm').addEventListener('submit', async (
     newPassword: form.newPassword.value
   };
   const token = localStorage.getItem('token');
-  const res = await fetch('http://localhost:3000/user/profile/password', {
+  const res = await fetch('https://cineawards.onrender.com/user/profile/password', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

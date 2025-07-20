@@ -493,7 +493,7 @@
     try {
       console.log('Fetching /api/categories/grouped...');
 
-      const res = await fetch('http://localhost:3000/category/grouped');
+      const res = await fetch('https://cineawards.onrender.com/category/grouped');
       const groupMap = await res.json();
       const groupsGrid = document.getElementById('groupsGrid');
 

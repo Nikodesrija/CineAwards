@@ -213,7 +213,7 @@ th, td {
   </script>
   <script>
   async function loadSubcategoriesGrouped() {
-    const res = await fetch('http://localhost:3000/category/categories', {
+    const res = await fetch('https://cineawards.onrender.com/category/categories', {
       headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
     });
     const result = await res.json();

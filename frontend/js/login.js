@@ -17,7 +17,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       password: password
     };
   }
-  const res = await fetch('http://localhost:3000/user/login', {
+  const res = await fetch('https://cineawards.onrender.com/user/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -53,7 +53,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     document.getElementById('forgotMsg').textContent = 'Please enter both Voter ID and Mobile Number.';
     return;
   }
-    const res = await fetch('http://localhost:3000/user/verify-for-reset', {
+    const res = await fetch('https://cineawards.onrender.com/user/verify-for-reset', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ voterId, mobile })
@@ -77,7 +77,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       return;
     }
 
-    const res = await fetch('http://localhost:3000/user/reset-password', {
+    const res = await fetch('https://cineawards.onrender.com/user/reset-password', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ voterId, newPassword })

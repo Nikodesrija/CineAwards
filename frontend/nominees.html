@@ -724,7 +724,7 @@ background-clip: text;
       if (!categoryId) return showError("Missing or invalid category.");
 
       try {
-        const res = await fetch(`http://localhost:3000/nominee/nominees/category/${categoryId}`, {
+        const res = await fetch(`https://cineawards.onrender.com/nominee/nominees/category/${categoryId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -740,7 +740,7 @@ background-clip: text;
     async function voteForNominee(nomineeId, btn) {
       if (isAdmin) return showToast("Admins cannot vote", true);
       try {
-        const res = await fetch(`http://localhost:3000/nominee/vote/${nomineeId}`, {
+        const res = await fetch(`https://cineawards.onrender.com/nominee/vote/${nomineeId}`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` }
         });

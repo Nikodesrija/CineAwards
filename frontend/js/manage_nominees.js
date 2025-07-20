@@ -9,7 +9,7 @@ async function fetchNominees() {
       return;
     }
 
-    const response = await fetch('http://localhost:3000/nominee/nominees', {
+    const response = await fetch('https://cineawards.onrender.com/nominee/nominees', {
       headers: { Authorization: 'Bearer ' + token }
     });
 
@@ -81,7 +81,7 @@ function deleteNominee(id) {
   const token = localStorage.getItem('token');
   if (!confirm('Are you sure you want to delete this nominee?')) return;
 
-  fetch(`http://localhost:3000/nominee/nominee/${id}`, {
+  fetch(`https://cineawards.onrender.com/nominee/nominee/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: 'Bearer ' + token
@@ -103,7 +103,7 @@ function updateNominee(id) {
   const image = prompt("Enter new image URL:");
 
   if (name && description) {
-    fetch(`http://localhost:3000/nominee/nominee/${id}`, {
+    fetch(`https://cineawards.onrender.com/nominee/nominee/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ async function loadNotifications() {
 
     try {
       // Replace with your actual API call
-      const res = await fetch('http://localhost:3000/notifications'); 
+      const res = await fetch('https://cineawards.onrender.com/notifications'); 
       const data = await res.json();
 
       if (data.length > 0) {
@@ -159,7 +159,7 @@ async function loadNotifications() {
 
     try {
       // Fetch notifications from your API (replace with your actual URL)
-      const res = await fetch('http://localhost:3000/notifications');
+      const res = await fetch('https://cineawards.onrender.com/notifications');
       notifications = await res.json();
 
       if (notifications.length > 0) {

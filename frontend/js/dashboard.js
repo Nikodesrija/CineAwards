@@ -6,7 +6,7 @@ function toggleSidebar() {
 // Fetch and render live results in poll format
 async function fetchResults() {
   const main = document.getElementById('mainContent');
-  const res = await fetch('http://localhost:3000/results', {
+  const res = await fetch('https://cineawards.onrender.com/results', {
     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
   });
   const data = await res.json();
@@ -53,7 +53,7 @@ fetchResults();
 
     try {
       // Replace with your actual API call
-      const res = await fetch('http://localhost:3000/notifications'); 
+      const res = await fetch('https://cineawards.onrender.com/notifications'); 
       const data = await res.json();
 
       if (data.length > 0) {
@@ -84,7 +84,7 @@ fetchResults();
 
     try {
       // Fetch notifications from your API (replace with your actual URL)
-      const res = await fetch('http://localhost:3000/notifications');
+      const res = await fetch('https://cineawards.onrender.com/notifications');
       notifications = await res.json();
 
       if (notifications.length > 0) {

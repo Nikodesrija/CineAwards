@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 
-const mangodburl='mongodb://localhost:27017/pj1db';
-
+//const mangodburl='mongodb://localhost:27017/pj1db';
+const mangodburl='mongodb+srv://cineaward_03:CineAward_03@cluster0.3tju6fh.mongodb.net/';
 
 mongoose.connect(mangodburl,{
     useNewUrlParser:true,

@@ -177,4 +177,3 @@ fetchCategories();
   }
 
   window.addEventListener('DOMContentLoaded', loadNotifications);
-loadNotifications();

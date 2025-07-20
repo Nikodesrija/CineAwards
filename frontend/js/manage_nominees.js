@@ -189,4 +189,3 @@ async function loadNotifications() {
   }
 
   window.addEventListener('DOMContentLoaded', loadNotifications);
-loadNotifications();

@@ -40,12 +40,25 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   function openModal() {
     document.getElementById('forgotModal').style.display = 'flex';
   }
-  function closeModal() {
-    document.getElementById('forgotModal').style.display = 'none';
-    document.getElementById('forgotMsg').textContent = '';
-    document.getElementById('step1').style.display = 'block';
-    document.getElementById('step2').style.display = 'none';
-  }
+ function closeModal() {
+  document.getElementById('forgotModal').style.display = 'none';
+
+  // Clear all input fields
+  document.getElementById('voterId').value = '';
+  document.getElementById('mobileNumber').value = '';
+  document.getElementById('newPassword').value = '';
+  document.getElementById('confirmPassword').value = '';
+
+  // Reset message and style
+  const msg = document.getElementById('forgotMsg');
+  msg.textContent = '';
+  msg.style.color = ''; // remove success color if applied
+
+  // Reset to initial step
+  document.getElementById('step1').style.display = 'block';
+  document.getElementById('step2').style.display = 'none';
+}
+
   async function verifyIdentity() {
     const voterId = document.getElementById('voterId').value.trim();
     const mobile = document.getElementById('mobileNumber').value.trim();

@@ -112,9 +112,7 @@ fetchResults();
     countBadge.style.display = 'none';
     // You can also make an API call here to mark them as read in your DB
   }
-
-  window.addEventListener('DOMContentLoaded', loadNotifications);
-loadNotifications();
+window.addEventListener('DOMContentLoaded', loadNotifications);
 
 
 // Main navigation logic

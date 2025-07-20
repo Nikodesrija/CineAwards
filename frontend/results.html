@@ -537,17 +537,21 @@
     <div id="groups"></div>
   </div>
 
-  <script>
+ <script>
   async function loadGroupsAndWinners() {
     try {
-      const grpRes = await fetch('https://cineawards.onrender.com/category/grouped');
-      const groups = await grpRes.json();
-      const winRes = await fetch('https://cineawards.onrender.com/win/result', {
-        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-      });
-      const winners = await winRes.json();
+      const [grpRes, winRes] = await Promise.all([
+        fetch('https://cineawards.onrender.com/category/grouped'),
+        fetch('https://cineawards.onrender.com/win/result', {
+          headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        })
+      ]);
 
+      const groups = await grpRes.json();
+      const winners = await winRes.json();
+      const now = new Date();
       const groupsContainer = document.getElementById('groups');
+
       Object.entries(groups).forEach(([groupName, cats]) => {
         const groupDiv = document.createElement('div');
         groupDiv.className = 'group-card';
@@ -555,21 +559,31 @@
         const catSec = groupDiv.querySelector('.category-section');
 
         cats.forEach(cat => {
-          const w = winners.find(x => x.categoryName === cat.name)?.winner;
+          const winnerEntry = winners.find(x => x.categoryName === cat.name);
+          const winner = winnerEntry?.winner;
+          const endDate = new Date(cat.endDate);
+          const showWinner = now >= endDate;
+          const formattedEnd = endDate.toLocaleDateString('en-US', {
+            year: 'numeric', month: 'short', day: 'numeric'
+          });
+
           const card = document.createElement('div');
           card.className = 'winner-card';
           card.innerHTML = `
-            <img class="winner-img" src="${w?.image||'fallback.jpg'}" alt="${w?.name||'TBD'}">
+            <img class="winner-img" src="${(showWinner && winner?.image) || 'fallback.jpg'}" alt="${(winner?.name || 'TBD')}">
             <div class="winner-info">
               <h4>${cat.name}</h4>
-              ${w ? `
-                <p><strong>Name:</strong> ${w.name}</p>
-                ${w.film ? `<p><strong>Film:</strong> ${w.film}</p>` : ''}
-                ${w.role ? `<p><strong>Role:</strong> ${w.role}</p>` : ''}
-                ${w.workTitle ? `<p><strong>Work:</strong> ${w.workTitle}</p>` : ''}
-                <p><strong>Votes:</strong> ${w.voteCount}</p>
-              ` : '<p class="no-winner">No winner yet</p>'}
-            </div>`;
+              ${showWinner && winner ? `
+                <p><strong>Name:</strong> ${winner.name}</p>
+                ${winner.film ? `<p><strong>Film:</strong> ${winner.film}</p>` : ''}
+                ${winner.role ? `<p><strong>Role:</strong> ${winner.role}</p>` : ''}
+                ${winner.workTitle ? `<p><strong>Work:</strong> ${winner.workTitle}</p>` : ''}
+                <p><strong>Votes:</strong> ${winner.voteCount}</p>
+              ` : `
+                <p class="no-winner">Winner will be announced on: <strong>${formattedEnd}</strong></p>
+              `}
+            </div>
+          `;
           catSec.append(card);
         });
 
@@ -577,6 +591,7 @@
       });
 
     } catch (e) {
+      console.error(e);
       document.getElementById('groups').innerHTML = '<p style="color:red">Failed to load data.</p>';
     }
   }
@@ -587,6 +602,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', loadGroupsAndWinners);
-  </script>
+</script>
 </body>
 </html>

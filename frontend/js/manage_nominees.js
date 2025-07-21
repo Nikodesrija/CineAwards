@@ -121,71 +121,48 @@ function updateNominee(id) {
   }
 }
 fetchNominees();
+let notifications = [];
+
 async function loadNotifications() {
-    const icon = document.getElementById('notificationIcon');
-    const dropdown = document.getElementById('notificationDropdown');
-    dropdown.innerHTML = ''; // Clear existing
+  const icon = document.getElementById('notificationIcon');
+  const countBadge = document.getElementById('notificationCount');
+  const dropdown = document.getElementById('notificationDropdown');
 
-    try {
-      // Replace with your actual API call
-      const res = await fetch('https://cineawards.onrender.com/notifications'); 
-      const data = await res.json();
+  // Clear previous notifications
+  dropdown.innerHTML = '';
+  countBadge.style.display = 'none';
+  icon.classList.remove('notification-dot');
 
-      if (data.length > 0) {
-        icon.classList.add('notification-dot');
+  try {
+    const res = await fetch('https://cineawards.onrender.com/notifications');
+    notifications = await res.json();
 
-        data.forEach(item => {
-          const li = document.createElement('li');
-          li.innerHTML = `<a class="dropdown-item" href="#">${item.message}</a>`;
-          dropdown.appendChild(li);
-        });
-      } else {
-        icon.classList.remove('notification-dot');
-        dropdown.innerHTML = '<li><span class="dropdown-item text-muted">No notifications</span></li>';
-      }
-    } catch (err) {
-      console.error('Error loading notifications:', err);
+    if (notifications.length > 0) {
+      // Show count and red dot
+      countBadge.innerText = notifications.length;
+      countBadge.style.display = 'inline-block';
+      icon.classList.add('notification-dot');
+
+      // Render each notification
+      notifications.forEach(n => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a class="dropdown-item" href="#">${n.message}</a>`;
+        dropdown.appendChild(li);
+      });
+    } else {
+      dropdown.innerHTML = '<li><span class="dropdown-item text-muted">No notifications</span></li>';
     }
+  } catch (err) {
+    console.error('Error fetching notifications:', err);
   }
-  let notifications = [];
+}
 
-  async function loadNotifications() {
-    const icon = document.getElementById('notificationIcon');
-    const countBadge = document.getElementById('notificationCount');
-    const dropdown = document.getElementById('notificationDropdown');
+// Clear count when dropdown is opened (mark as viewed)
+function markNotificationsViewed() {
+  const countBadge = document.getElementById('notificationCount');
+  countBadge.style.display = 'none';
+  // Optionally: API call to mark as read on backend
+}
 
-    dropdown.innerHTML = '';
-    countBadge.style.display = 'none';
-
-    try {
-      // Fetch notifications from your API (replace with your actual URL)
-      const res = await fetch('https://cineawards.onrender.com/notifications');
-      notifications = await res.json();
-
-      if (notifications.length > 0) {
-        // Show count
-        countBadge.innerText = notifications.length;
-        countBadge.style.display = 'inline-block';
-
-        // Render notifications
-        notifications.forEach(n => {
-          const li = document.createElement('li');
-          li.innerHTML = `<a class="dropdown-item" href="#">${n.message}</a>`;
-          dropdown.appendChild(li);
-        });
-      } else {
-        dropdown.innerHTML = '<li><span class="dropdown-item text-muted">No notifications</span></li>';
-      }
-    } catch (err) {
-      console.error('Error fetching notifications:', err);
-    }
-  }
-
-  // Mark as viewed (clear count when dropdown is opened)
-  function markNotificationsViewed() {
-    const countBadge = document.getElementById('notificationCount');
-    countBadge.style.display = 'none';
-    // You can also make an API call here to mark them as read in your DB
-  }
-
-  window.addEventListener('DOMContentLoaded', loadNotifications);
+// Run on page load
+window.addEventListener('DOMContentLoaded', loadNotifications);

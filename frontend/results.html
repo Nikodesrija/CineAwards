@@ -363,6 +363,7 @@
       border-color: var(--accent);
       transform: scale(1.05);
     }
+  
 
     .winner-info {
       padding: 1.5rem;
@@ -538,70 +539,79 @@
   </div>
 
  <script>
-  async function loadGroupsAndWinners() {
-    try {
-      const [grpRes, winRes] = await Promise.all([
-        fetch('https://cineawards.onrender.com/category/grouped'),
-        fetch('https://cineawards.onrender.com/win/result', {
-          headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-        })
-      ]);
+async function loadGroupsAndWinners() {
+  try {
+    const [groupRes, dateRes, winRes] = await Promise.all([
+     fetch('https://cineawards.onrender.com/category/grouped'),
+  fetch('https://cineawards.onrender.com/category/dates/Best Actress'),
+  fetch('https://cineawards.onrender.com/win/result', {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+      })
+    ]);
 
-      const groups = await grpRes.json();
-      const winners = await winRes.json();
-      const now = new Date();
-      const groupsContainer = document.getElementById('groups');
+    const groups = await groupRes.json();
+    const winners = await winRes.json();
 
-      Object.entries(groups).forEach(([groupName, cats]) => {
-        const groupDiv = document.createElement('div');
-        groupDiv.className = 'group-card';
-        groupDiv.innerHTML = `<div class="group-title">${groupName}</div><div class="category-section"></div>`;
-        const catSec = groupDiv.querySelector('.category-section');
+    // Use startDate and endDate from Best Actress as reference
+    const { startDate, endDate } = await dateRes;
+    const now = new Date();
+    const announceDate = new Date(endDate);
+    announceDate.setDate(announceDate.getDate() + 1);
+    const showWinner = now >= announceDate;
 
-        cats.forEach(cat => {
-          const winnerEntry = winners.find(x => x.categoryName === cat.name);
-          const winner = winnerEntry?.winner;
-          const endDate = new Date(cat.endDate);
-          const showWinner = now >= endDate;
-          const formattedEnd = endDate.toLocaleDateString('en-US', {
-            year: 'numeric', month: 'short', day: 'numeric'
-          });
+    const groupsContainer = document.getElementById('groups');
+    groupsContainer.innerHTML = ''; // Clear existing content
+
+    Object.entries(groups).forEach(([groupName, categories]) => {
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'group-card';
+      groupDiv.innerHTML = `<div class="group-title">${groupName}</div><div class="category-section"></div>`;
+      const catSec = groupDiv.querySelector('.category-section');
+
+      let groupHasAnyWinners = false;
+
+      categories.forEach(cat => {
+        const winnerEntry = winners.find(x => x.categoryName === cat.name);
+        const winner = winnerEntry?.winner;
+
+        if (showWinner && winner) {
+          groupHasAnyWinners = true;
 
           const card = document.createElement('div');
           card.className = 'winner-card';
           card.innerHTML = `
-            <img class="winner-img" src="${(showWinner && winner?.image) || 'fallback.jpg'}" alt="${(winner?.name || 'TBD')}">
+            <img class="winner-img" src="${winner.image}" alt="${winner.name}">
             <div class="winner-info">
               <h4>${cat.name}</h4>
-              ${showWinner && winner ? `
-                <p><strong>Name:</strong> ${winner.name}</p>
-                ${winner.film ? `<p><strong>Film:</strong> ${winner.film}</p>` : ''}
-                ${winner.role ? `<p><strong>Role:</strong> ${winner.role}</p>` : ''}
-                ${winner.workTitle ? `<p><strong>Work:</strong> ${winner.workTitle}</p>` : ''}
-                <p><strong>Votes:</strong> ${winner.voteCount}</p>
-              ` : `
-                <p class="no-winner">Winner will be announced on: <strong>${formattedEnd}</strong></p>
-              `}
+              <p><strong>Name:</strong> ${winner.name}</p>
+              ${winner.film ? `<p><strong>Film:</strong> ${winner.film}</p>` : ''}
+              ${winner.role ? `<p><strong>Role:</strong> ${winner.role}</p>` : ''}
+              ${winner.workTitle ? `<p><strong>Work:</strong> ${winner.workTitle}</p>` : ''}
+              <p><strong>Votes:</strong> ${winner.voteCount}</p>
+              <p><em>Announced on: <strong>${announceDate.toLocaleDateString()}</strong></em></p>
             </div>
           `;
           catSec.append(card);
-        });
-
-        groupsContainer.append(groupDiv);
+        }
       });
 
-    } catch (e) {
-      console.error(e);
-      document.getElementById('groups').innerHTML = '<p style="color:red">Failed to load data.</p>';
-    }
-  }
+      if (!groupHasAnyWinners) {
+        const fallback = document.createElement('p');
+        fallback.className = 'no-winner';
+        fallback.textContent = 'Winners for this group will be announced soon.';
+        groupDiv.append(fallback);
+      }
 
-  function logout() {
-    localStorage.removeItem('token');
-    window.location.href = 'login.html';
-  }
+      groupsContainer.append(groupDiv);
+    });
 
-  document.addEventListener('DOMContentLoaded', loadGroupsAndWinners);
+  } catch (error) {
+    console.error('Failed to load winners:', error);
+    document.getElementById('groups').innerHTML =
+      '<p style="color:red">Failed to load data.</p>';
+  }
+}
+document.addEventListener('DOMContentLoaded', loadGroupsAndWinners);
 </script>
 </body>
 </html>

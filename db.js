@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 require('dotenv').config();
-const mangodburl=process.env.MONGODB_URL_LOCAL;
-//const mangodburl=process.env.MONGODB_URL;
+//const mangodburl=process.env.MONGODB_URL_LOCAL;
+const mangodburl=process.env.MONGODB_URL;
 
 mongoose.connect(mangodburl,{
     useNewUrlParser:true,

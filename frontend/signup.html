@@ -331,97 +331,110 @@
         padding: 2rem;
       }
     }
-  #voterIdBox {
-  background: linear-gradient(135deg, #1e1e2f, #2b2b4d);
-  color: white;
+ #voterIdBox { 
+  background: var(--gradient-card);
+  color: var(--foreground);
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
   text-align: center;
-  box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+  box-shadow: var(--glow-primary);
+  border: 1px solid var(--border);
 }
 
 #voterIdBox button {
-  background-color: #ff0099;
+  background: var(--gradient-primary);
   color: white;
   padding: 10px 20px;
   border: none;
   margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: var(--glow-primary);
 }
- .blurred {
-      filter: blur(6px);
-      pointer-events: none;
-    }
 
-    #voterIdModal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(4px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      display: none;
-    }
+#voterIdBox button:hover {
+  box-shadow: 0 0 15px hsla(280, 85%, 65%, 0.3);
+  transform: translateY(-2px);
+}
 
-    .modal-card {
-      background: linear-gradient(135deg, #45454f, #2f2f58);
-      padding: 30px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 450px;
-      text-align: center;
-      color: white;
-      position: relative;
-      box-shadow: 0 0 20px rgba(255, 0, 128, 0.36);
-      animation: fadeInScale 0.5s ease-out;
-    }
+#voterIdModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 20, 0.88);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  display: none;
+}
 
-    .modal-card h2 {
-      margin-bottom: 10px;
-    }
+.modal-card {
+  background: var(--gradient-card);
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  color: var(--foreground);
+  position: relative;
+  box-shadow: var(--glow-accent);
+  animation: fadeInScale 0.5s ease-out;
+  border: 1px solid var(--border);
+}
 
-    .modal-card p#importantNote {
-      color: #ff4d4d;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
+.modal-card h2 {
+  margin-bottom: 10px;
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .modal-card .btn-group {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-around;
-      gap: 10px;
-    }
+.modal-card p#importantNote {
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 15px;
+}
 
-    .modal-card button {
-      padding: 10px 20px;
-      background-color: #ff0099;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+.modal-card .btn-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
 
-    .modal-close {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      cursor: pointer;
-      color: #aaa;
-    }
+.modal-card button {
+  padding: 10px 20px;
+  background: var(--gradient-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: var(--glow-secondary);
+  transition: transform 0.2s ease;
+}
 
-    .modal-close:hover {
-      color: rgb(170, 11, 11);
-    }
+.modal-card button:hover {
+  transform: translateY(-2px);
+}
 
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.modal-close:hover {
+  color: var(--accent);
+}
     @keyframes fadeInScale {
       from {
         opacity: 0;
@@ -499,7 +512,6 @@
             <li>Uses special characters for extra security</li>
           </ul>
         </div>
-
         <button type="submit" class="btn">Create Account</button>
       </form>
 

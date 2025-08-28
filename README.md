@@ -45,8 +45,3 @@ Built with a beautiful frontend and a powerful backend, this project brings awar
 - JWT for authentication
 - RESTful APIs
 
-JWT_SECRET=your_jwt_secret
-MONGODB_URI=your_mongo_connection_string
-
-# 4. Run the server
-node server.js
